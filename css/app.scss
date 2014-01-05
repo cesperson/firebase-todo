@@ -1,0 +1,172 @@
+@import "../scss/foundation/";
+
+body {
+  font-family: 'Helvetica Neue', Helvetica, Verdana;
+  font-size: 16px;
+  background: red;
+
+}
+
+
+h1 {
+  font-size: 1.4em;
+}
+
+h2 {
+  font-size: .9em;
+}
+
+p, ul {
+  font-size: 1em;
+}
+
+.lists-container {
+  width: 100%;
+  overflow: scroll;
+  border: 1px solid #ccc;
+  margin: 10px 0;
+  padding: 10px;
+}
+
+.lists {
+  width: 3000px;
+}
+
+.list-container {
+  float: left;
+  width: 300px;
+  margin-right: 20px;
+  background: #eee;
+}
+
+.add-board {
+
+  .add-board-text {
+    border: 0;
+    background: #eaeaea;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+
+}
+
+ul {
+  margin: 0 0 0 0;
+  padding: 0;
+  li {
+    list-style-type: none;
+    color: #fff;
+  }
+}
+
+ul.incomplete-todos {
+  margin: 0 0 20px 0;
+
+  li {
+    background: #3498BD;
+    position: relative;
+    clear: both;
+    overflow: hidden;
+
+    .item-text {
+      display: block;
+      padding: 10px;
+      float: left;
+    }
+
+    &.ui-sortable-helper {
+      border: 10px solid #fff;
+      padding: 10px;
+      background: #fff;
+      color: #000;
+    }
+    &:nth-child(even) {
+      background: darken(#3498BD, 10%);
+    }
+
+
+    &:hover .item-delete {
+      visibility: visible;
+    }
+
+    .item-delete {
+      visibility: hidden;
+      float:right;
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+
+    .item-delete a {
+      display: block;
+      background-color: #ccc;
+      color: #999;
+      padding: 10px 20px;
+      &:hover {
+        color: #333;
+        background-color: #999;
+      }
+    }
+  }
+
+  li.sortable-placeholder-custom {
+    background: #2980B9;
+    height: 40px;
+  }
+}
+
+
+ul.complete-todos {
+  font-size: .8em;
+  margin: 0 0 15px 0;
+  li {
+    background: rgb(221, 214, 214);
+    padding: 5px;
+    color: #777;
+  }
+}
+
+a {
+  text-decoration: none;
+  color: #3648ff;
+}
+
+
+/* app css stylesheet */
+
+.menu {
+  list-style: none;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  padding: 0 0 0.5em;
+  color: #fff;
+  a {
+    color: #fff;
+  }
+  .button {
+    font-weight: normal;
+  }
+
+}
+
+.menu > li a.activelink {
+  font-weight: bold;
+}
+
+.board {
+  clear: both;
+  display: none;
+  margin-right: 4em;
+}
+
+.board.activeboard {
+  display: block;
+}
+
+.button {
+
+}
+
+button.todos-clear-archived, button.list-remove {
+  display: none;
+}
