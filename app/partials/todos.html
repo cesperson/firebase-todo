@@ -1,0 +1,55 @@
+<ul class="menu button-group radius">
+    <li ng-repeat="board in boards" ng-click="setActive($index)" ng-dblclick="removeBoard($index)" class="small button secondary">
+        <a href="" ng-class="{activelink: isActive($index)}">{{ board.title }}</a>
+    </li>
+</ul>
+
+<div class="large-6 columns">
+    <form class="add-board" ng-submit="addBoard(boardText)">
+        <div class="row">
+            <div class="small-9 columns">
+                <input class="add-board-text" type="text" ng-model="boardText"/>
+            </div>
+            <div class="small-3 columns">
+                <input class="button tiny" type="submit" value="add board">
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="board" data-board-index="{{ $index }}" ng-class="{activeboard: isActive($index)}" ng-repeat="board in boards">
+    <h1>{{ board.title }}</h1>
+    <div class="lists-container">
+        <div class="lists">
+            <div class="list-container panel" data-list-index="{{ $index }}" ng-repeat="list in board.lists">
+                <h2>{{ list.title }}</h2>
+                <ul class="incomplete-todos" data-list-index="{{ $index }}" sortable>
+                    <li ng-repeat="item in list.todos | filter:isIncomplete">
+                        <div class="item-text">{{ item.thing }}</div>
+                        <div class="item-delete">
+                            <a href="" class="close" ng-click="removeTodo(item)">x</a>
+                        </div>
+                    </li>
+                </ul>
+
+                <ul class="complete-todos">
+                    <li ng-repeat="item in list.todos | filter:isDone" ng-dblclick="returnTodo(item)">{{ item.thing }}</li>
+                </ul>
+
+                <form ng-submit="addTodo(todoText, $parent.$index, $index)">
+                    <input type="text" ng-model="todoText"/>
+                    <input type="submit" value="add" class="button tiny">
+                </form>
+
+                <button ng-click="removeArchived($parent.$index, $index)" class="tiny alert todos-clear-archived" showonhoverparent>Clear Archived</button>
+                <button ng-click="removeList($parent.$index, $index)" class="tiny alert list-remove" showonhoverparent>Delete List</button>
+            </div>
+        </div>
+    </div>
+    <form ng-submit="addList(listTitle, $index)">
+        <input type="text" ng-model="listTitle"/>
+        <input type="submit" value="add list">
+    </form>
+</div>
+
+<!--<script src="http://192.168.1.113:35729/livereload.js?snipver=1"></script>-->
