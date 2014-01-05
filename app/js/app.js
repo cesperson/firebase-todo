@@ -3,16 +3,21 @@
 // Declare app level module which depends on filters, and services
 var myApp = angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives', 'firebase']).
   config(['$routeProvider', function($routeProvider) {
-    $routeProvider.when('/todos', {templateUrl: 'partials/todos.html', controller: 'MyCtrl1'});
-    $routeProvider.when('/view2', {templateUrl: 'partials/partial2.html', controller: 'MyCtrl1'});
-    $routeProvider.when('/test-unique-url'), {templateUrl: 'partials/todos-unique.html', controller: 'MyCtrl1'}
-    $routeProvider.otherwise({redirectTo: '/todos'});
+        $routeProvider.when('/', {
+            redirectTo: function () {
+                return "/" + makeID();
+            }
+        });
+
+        $routeProvider.otherwise({templateUrl: 'partials/todos.html', controller: 'MyCtrl1'});
   }]);
 
 myApp.controller('MyCtrl1', ['$scope', '$filter', 'angularFire', 'angularFireCollection',
     function MyCtrl1($scope, $filter, angularFire, angularFireCollection) {
-        var url = 'https://angulartodo.firebaseIO.com/todomvc';
-        var promise = angularFire(url, $scope, 'boards', []);
+        var userRef = new Firebase('https://angulartodo.firebaseIO.com/todomvc/'),
+            currentHash = window.location.hash.substr(2),
+            url = 'https://angulartodo.firebaseIO.com/todomvc/boards/' + currentHash,
+            promise = angularFire(url, $scope, 'boards', []);
 
         promise.then(function() {
             startWatch($scope, $filter);
@@ -118,4 +123,16 @@ function startWatch($scope, $filter) {
     }
 
     $scope.init();
+}
+
+// From  http://stackoverflow.com/questions/1349404/generate-a-string-of-5-random-characters-in-javascript
+function makeID() {
+    var text = '',
+        possible = "abcdefghijklmnopqrstuvwxyz0123456789";
+
+    for (var i = 0; i < 5; i += 1) {
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+
+    return text;
 }
